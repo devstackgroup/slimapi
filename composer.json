@@ -1,0 +1,21 @@
+{
+    "name": "devstackgroup/SlimApi",
+    "description": "JSON API implementation for Slim",
+    "require": {
+        "php": ">=5.4",
+        "slim/slim": "^2.6"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrzej Kostrzewa",
+            "email": "andkos11@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "SlimApi\\": "src"
+        }
+    }
+}
