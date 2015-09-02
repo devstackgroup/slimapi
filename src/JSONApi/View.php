@@ -1,6 +1,6 @@
 <?php
 
-namespace SlimApi;
+namespace SlimApi\JSONApi;
 
 use Slim\Slim;
 
@@ -68,6 +68,6 @@ class View extends \Slim\View
     public function setEncodingJSON($encodingCode)
     {
         $this->encodingJSON = $encodingCode;
-        return 
+        return $this;
     }
 }

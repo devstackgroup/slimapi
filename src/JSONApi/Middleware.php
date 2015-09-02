@@ -1,6 +1,6 @@
 <?php
 
-namespace SlimApi;
+namespace SlimApi\JSONApi;
 
 use Slim\Slim;
 
