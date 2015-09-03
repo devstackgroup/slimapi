@@ -1,5 +1,5 @@
 {
-    "name": "devstackgroup/SlimApi",
+    "name": "devstackgroup/slimapi",
     "description": "JSON API implementation for Slim",
     "require": {
         "php": ">=5.4",
