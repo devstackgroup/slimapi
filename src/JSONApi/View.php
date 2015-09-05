@@ -26,7 +26,7 @@ class View extends \Slim\View
 
 	public function render($status = 200, $data = null)
 	{
-		
+
         $app = $this->app;
 
 		$status = (int) $status;
@@ -51,15 +51,15 @@ class View extends \Slim\View
         $JSONResponse = isset($JSONResponse[0]) && count($JSONResponse) === 1 && is_scalar($JSONResponse[0]) ? $JSONResponse[0] : $JSONResponse;
 
    		$app->response()->status($status);
-        $app->response()->header('Content-Type', View::$contentType['json']);
+        $app->response()->header('Content-Type', View::$contentType['json'].'; charset=utf-8');
 
         $jsonp_callback = $app->request->get('callback', null);
 
         if ($jsonp_callback !== null) {
-        	$app->response()->header('Content-Type', View::$contentType['jsonp']);
+        	$app->response()->header('Content-Type', View::$contentType['jsonp'].'; charset=utf-8');
             $app->response()->body(call_user_func_array($jsonp_callback, [json_encode($JSONResponse, $this->encodingJSON)]));
         } else {
-            $app->response()->body(json_encode($JSONResponse, $this->encodingJSON));
+            $app->response()->body(json_encode($JSONResponse, $this->encodingJSON | JSON_UNESCAPED_UNICODE));
         }
 
         $app->stop();
