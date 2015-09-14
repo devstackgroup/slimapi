@@ -63,7 +63,7 @@ class Middleware extends \Slim\Middleware
 
 		$app->error(function (\Exception $e) use ($app) {
             $statusCode = empty($e->getCode()) ? 500 : $e->getCode();
-            $errorMessage = ini_get('display_errors') === '1' ? $this->errorMessage($e) : 'Server error';
+            $errorMessage = ini_get('display_errors') === '1' ? $this->errorMessage($e, 0) : 'Server error';
             $app->render($statusCode, [
                 'error' => $errorMessage
             ]);
@@ -90,8 +90,9 @@ class Middleware extends \Slim\Middleware
         return $this->next->call();
     }
 
-	private function errorMessage($e)
+	private function errorMessage($e, $full)
 	{
-		return Middleware::errorType($e->getCode()).": {$e->getMessage()} - in file: {$e->getFile()} on line: {$e->getLine()}";
+		return $full ? Middleware::errorType($e->getCode()).": {$e->getMessage()} - in file: {$e->getFile()} on line: {$e->getLine()}":
+        Middleware::errorType($e->getCode()).": {$e->getMessage()}";
 	}
 }
