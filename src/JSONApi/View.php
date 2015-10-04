@@ -50,7 +50,6 @@ class View extends \Slim\View
 
         $JSONResponse = isset($JSONResponse[0]) && count($JSONResponse) === 1 && is_scalar($JSONResponse[0]) ? $JSONResponse[0] : $JSONResponse;
 
-   		$app->response()->status($status);
         $app->response()->header('Content-Type', View::$contentType['json'].'; charset=utf-8');
 
         $jsonp_callback = $app->request->get('callback', null);
