@@ -11,10 +11,10 @@ class Middleware extends \Slim\Middleware
 {
     private $config = [];
 
-	public function __construct(array $config = [])
-	{
+    public function __construct(array $config = [])
+    {
         $this->config = array_merge(['isObject' => false], $config);
-	}
+    }
 
     public function call(){
         $app = $this->app;
