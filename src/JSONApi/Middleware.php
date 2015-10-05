@@ -44,34 +44,36 @@ class Middleware extends \Slim\Middleware
             case E_USER_DEPRECATED: 
                 return 'USER_DEPRECATED';
             case E_ALL:
-            	return 'ALL';
+                return 'ALL';
         }
     }
 
-	public function __construct(Slim $app = null)
-	{
-		$app = ($app instanceof Slim) ? $app : Slim::getInstance();
+    public function __construct(Slim $app = null)
+    {
+        $app = ($app instanceof Slim) ? $app : Slim::getInstance();
 
-		$app->get('/request', function () use ($app) {
-			$app->render(200, [
-				'method'  => $app->request()->getMethod(),
+        $app->get('/request', function () use ($app) {
+            $app->render(200, [
+                'method'  => $app->request()->getMethod(),
                 'name'    => $app->request()->get('name'),
                 'headers' => $app->request()->headers(),
                 'params'  => $app->request()->params()
-			]);
-		});
+            ]);
+        });
 
-		$app->error(function (\Exception $e) use ($app) {
+        $app->error(function (\Exception $e) use ($app) {
             $statusCode = empty($e->getCode()) ? 500 : $e->getCode();
             $errorMessage = ini_get('display_errors') === '1' ? $this->errorMessage($e, 0) : 'Server error';
             $app->render($statusCode, [
-                'error' => $errorMessage
+                'response' => $errorMessage,
+                'error' => true
             ]);
         });
 
         $app->notFound(function () use ($app) {
             $app->render(404, [
-                'error' => 'Invalid route'
+                'response' => 'Invalid route',
+                'error' => true
             ]);
         });
 
@@ -84,15 +86,15 @@ class Middleware extends \Slim\Middleware
                 $app->render(204);
             }
         });
-	}
+    }
 
     public function call(){
         return $this->next->call();
     }
 
-	private function errorMessage($e, $full)
-	{
-		return $full ? Middleware::errorType($e->getCode()).": {$e->getMessage()} - in file: {$e->getFile()} on line: {$e->getLine()}":
+    private function errorMessage($e, $full)
+    {
+        return $full ? Middleware::errorType($e->getCode()).": {$e->getMessage()} - in file: {$e->getFile()} on line: {$e->getLine()}":
         Middleware::errorType($e->getCode()).": {$e->getMessage()}";
-	}
+    }
 }
