@@ -19,7 +19,7 @@ class View extends \Slim\View
 	];
 
 	public function __construct(Slim $app = null)
-    {
+       {
 		$this->app = ($app instanceof Slim) ? $app : Slim::getInstance();
         parent::__construct();
 	}
