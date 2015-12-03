@@ -62,7 +62,7 @@ class Middleware extends \Slim\Middleware
         });
 
         $app->error(function (\Exception $e) use ($app) {
-            $statusCode = isset($e->getCode()) ? 500 : $e->getCode();
+            $statusCode = $e->getCode() ? 500 : $e->getCode();
             $errorMessage = ini_get('display_errors') === '1' ? $this->errorMessage($e, 0) : 'Server error';
             $app->render($statusCode, [
                 'response' => $errorMessage,
